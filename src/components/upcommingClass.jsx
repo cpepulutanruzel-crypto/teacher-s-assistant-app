@@ -24,11 +24,11 @@ const UpcommingClasses = () => {
     return <p>No Upcomming Classes</p>;
   } else {
     return (
-      <div className="container mt-5">
+      <div class="d-flex flex-row mb-3 mt-3">
         <div className="row">
           {studentClass.map((sections) => (
             <div className="col-md-4 mb-3" key={sections.section}>
-              <div className="card">
+              <div className="card p-2 " id="upcomming-class-card">
                 <div className="card-body">
                   <h5 className="card-title">{sections.section}</h5>
                   <p className="card-text">Students: {sections.students}</p>

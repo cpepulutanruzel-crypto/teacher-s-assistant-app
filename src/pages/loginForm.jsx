@@ -85,7 +85,7 @@ function LoginForm() {
 
   return (
     <div className="container mt-5">
-      <div className="card">
+      <div className="card" id="login-card">
         <div className="card-body">
           <h5 className="card-title">Login</h5>
           <form onSubmit={handleSubmit}>
