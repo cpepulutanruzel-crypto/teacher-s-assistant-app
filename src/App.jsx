@@ -4,6 +4,9 @@ import LOGIN from "./pages/loginForm";
 import DASHBOARD from "./pages/dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import CREATE from "./pages/createClass";
+import LAYOUT from "./pages/Layout";
+
 function App() {
   return (
     <BrowserRouter>
@@ -11,13 +14,15 @@ function App() {
         <Route path="/" element={<LOGIN />} />
 
         <Route
-          path="/dashboard"
           element={
             <ProtectedRoute>
-              <DASHBOARD />
+              <LAYOUT />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="/home" element={<DASHBOARD />} />
+          <Route path="/create-class" element={<CREATE />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

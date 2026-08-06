@@ -1,3 +1,7 @@
+
+
+
+
 const UpcommingClasses = () => {
   const studentClass = [
     {
@@ -43,4 +47,6 @@ const UpcommingClasses = () => {
     );
   }
 };
+
+
 export default UpcommingClasses;
