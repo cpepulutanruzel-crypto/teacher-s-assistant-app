@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 function fakeLogin(username, password) {
   return new Promise((resolve) => {
@@ -24,6 +26,7 @@ function LoginForm() {
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -67,6 +70,7 @@ function LoginForm() {
       if (response.success) {
         // localStorage.setItem("token", data.token);
         // alert("Login Successful!");
+        login(); // Change isLoggedIn from false to true
         navigate("/dashboard");
       } else {
         alert("Invalid username or password.");
@@ -97,7 +101,7 @@ function LoginForm() {
               {error.username && (
                 <p className="text-danger">{error.username}</p>
               )}
-              {/* <div className="invalid-feedback">{error.username}</div> */}
+  
             </div>
             <div className="mb-3">
               <label className="form-label">Password</label>
@@ -111,7 +115,7 @@ function LoginForm() {
               {error.password && (
                 <p className="text-danger">{error.password}</p>
               )}
-              {/* <div className="invalid-feedback">{error.password}</div> */}
+             
             </div>
             <button type="submit" className="btn btn-primary">
               {loading ? "Logging in..." : "Login"}
