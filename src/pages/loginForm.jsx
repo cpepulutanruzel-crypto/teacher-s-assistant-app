@@ -3,23 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-function fakeLogin(username, password) {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      if (username === "admin" && password === "123456") {
-        resolve({
-          success: true,
-          token: "fake-jwt-token-12345"
-        });
-      } else {
-        resolve({
-          success: false,
-          message: "Invalid username or password",
-        });
-      }
-    }, 1000);
-  });
-}
+import { fakeLogin } from "../utils/userManager";
+
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -72,7 +57,7 @@ function LoginForm() {
         // localStorage.setItem("token", data.token);
         // alert("Login Successful!");
         console.log(response)
-        login(response .token);
+        login(response.token);
         navigate("/dashboard");
       } else {
         alert("Invalid username or password.");
