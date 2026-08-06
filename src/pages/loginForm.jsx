@@ -9,6 +9,7 @@ function fakeLogin(username, password) {
       if (username === "admin" && password === "123456") {
         resolve({
           success: true,
+          token: "fake-jwt-token-12345"
         });
       } else {
         resolve({
@@ -70,7 +71,8 @@ function LoginForm() {
       if (response.success) {
         // localStorage.setItem("token", data.token);
         // alert("Login Successful!");
-        login(); // Change isLoggedIn from false to true
+        console.log(response)
+        login(response .token);
         navigate("/dashboard");
       } else {
         alert("Invalid username or password.");
