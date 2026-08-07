@@ -58,7 +58,7 @@ function LoginForm() {
         // alert("Login Successful!");
         console.log(response)
         login(response.token);
-        navigate("/dashboard");
+        navigate("/home");
       } else {
         alert("Invalid username or password.");
       }
