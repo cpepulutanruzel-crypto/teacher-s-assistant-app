@@ -4,8 +4,9 @@ import LOGIN from "./pages/loginForm";
 import DASHBOARD from "./pages/dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import CREATE from "./pages/createClass";
+import CREATECLASS from "./pages/createClass";
 import LAYOUT from "./pages/Layout";
+import ADDSTUDENT from "./pages/addStudent";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
           }
         >
           <Route path="/home" element={<DASHBOARD />} />
-          <Route path="/create-class" element={<CREATE />} />
+          <Route path="/create-class" element={<CREATECLASS />} />
+          <Route path="/add-student" element={<ADDSTUDENT />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -6,6 +6,7 @@ function CreateClass() {
     sectionName: "",
     sectionTimeIn: "",
     sectionTimeOut: "",
+    sectionStudent : []
   });
 
   const handleSubmit = (e) => {
@@ -22,12 +23,16 @@ function CreateClass() {
     });
   };
 
-  function handleChange(e) {
-    setSection({
-      ...section,
-      [e.target.name]: e.target.value,
-    });
-  }
+
+
+  // function handleChange(e) {
+  //   setSection({
+  //     ...section,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // }
+  const handleChange = (e) =>
+    setSection({ ...section, [e.target.name]: e.target.value });
 
   return (
     <div className="card p-3 mt-3">

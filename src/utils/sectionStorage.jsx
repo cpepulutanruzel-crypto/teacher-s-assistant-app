@@ -17,3 +17,18 @@ export const removeSection = (id) => {
   const updatedSections = sections.filter((section) => section.id !== id);
   localStorage.setItem(KEY, JSON.stringify(updatedSections));
 };
+
+export const addStudentToSection = (sectionId, student) => {
+  const sections = getSections();
+  const section = sections.find((section) => section.id === sectionId);
+  if (!section) {
+    return null;
+  }
+  section.sectionStudent.push({
+    id: Date.now(),
+    ...student,
+  });
+  localStorage.setItem(KEY, JSON.stringify(sections));
+
+  return sections;
+};

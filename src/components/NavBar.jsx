@@ -48,6 +48,11 @@ function Navbar() {
                   Create Class
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/add-student">
+                  Add Student
+                </Link>
+              </li>
             </ul>
           </div>
 
