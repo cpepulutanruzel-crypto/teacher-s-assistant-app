@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LOGIN from "./pages/loginForm";
@@ -7,11 +8,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import CREATECLASS from "./pages/createClass";
 import LAYOUT from "./pages/Layout";
 import ADDSTUDENT from "./pages/addStudent";
+import SectionStudents from "./pages/sectionClass";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/" element={<LOGIN />} />
 
         <Route
@@ -22,12 +25,27 @@ function App() {
           }
         >
           <Route path="/home" element={<DASHBOARD />} />
-          <Route path="/create-class" element={<CREATECLASS />} />
-          <Route path="/add-student" element={<ADDSTUDENT />} />
+
+          <Route
+            path="/section/:id"
+            element={<SectionStudents />}
+          />
+
+          <Route
+            path="/create-class"
+            element={<CREATECLASS />}
+          />
+
+          <Route
+            path="/add-student"
+            element={<ADDSTUDENT />}
+          />
         </Route>
+
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+

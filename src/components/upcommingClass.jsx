@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom";
 import { getSections } from "../utils/sectionStorage";
 
-const sectionList = () => {
+const SectionList = () => {
   const sections = getSections();
 
   if (sections.length === 0) {
@@ -8,22 +9,28 @@ const sectionList = () => {
   }
 
   return (
-    <div className="d-flex flex-wrap gap-3 mt-3">
+     <div className="d-flex flex-wrap gap-3 mt-3">
       {sections.map((section) => (
         <div key={section.id}>
-          <div className="card" id="upcomming-class-card">
-            <div className="card-body">
-              <h5 className="card-title">{section.sectionName}</h5>
+          <Link to={`/section/${section.id}`} className="text-decoration-none">
+            <div className="card" id = "upcomming-class-card">
+              <div className="card-body">
+                <h5 className="card-title">{section.sectionName}</h5>
 
-              <p className="card-text">Time In: {section.sectionTimeIn}</p>
+                <p className="card-text">Time In: {section.sectionTimeIn}</p>
 
-              <p className="card-text">Time Out: {section.sectionTimeOut}</p>
+                <p className="card-text">Time Out: {section.sectionTimeOut}</p>
+
+                <p className="card-text">
+                  Students: {section.sectionStudent.length}
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       ))}
     </div>
   );
 };
 
-export default sectionList;
+export default SectionList;
