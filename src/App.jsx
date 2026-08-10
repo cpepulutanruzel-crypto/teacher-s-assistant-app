@@ -9,6 +9,7 @@ import CREATECLASS from "./pages/createClass";
 import LAYOUT from "./pages/Layout";
 import ADDSTUDENT from "./pages/addStudent";
 import SectionStudents from "./pages/sectionClass";
+import SIGNUP from "./pages/signUp"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
 
         <Route path="/" element={<LOGIN />} />
+        <Route path= "/signup" element={<SIGNUP/>}/>
 
         <Route
           element={

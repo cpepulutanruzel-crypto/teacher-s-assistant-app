@@ -3,11 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-import { fakeLogin } from "../utils/userManager";
-
-
 function LoginForm() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
@@ -18,8 +15,8 @@ function LoginForm() {
     event.preventDefault();
     let newErrors = {};
 
-    if (!username) {
-      newErrors.username = "Username is required";
+    if (!email) {
+      newErrors.email = "email is required";
     }
 
     if (!password) {
@@ -37,31 +34,26 @@ function LoginForm() {
     setLoading(true);
 
     try {
-      // const response = await fetch("http://localhost:5173/login", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     username,
-      //     password,
-      //   }),
-      // });
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
 
+        headers: {
+          "Content-Type": "application/json",
+        },
 
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-      const response = await fakeLogin(username, password);
+      const data = await response.json();
 
-      // const data = await response.json();
-      if (response.success) {
-        // localStorage.setItem("token", data.token);
-        // alert("Login Successful!");
-        console.log(response)
-        login(response.token);
-        navigate("/home");
-      } else {
-        alert("Invalid username or password.");
-      }
+      console.log(data);
+      navigate("/home");
+      login(data.token);
+
+    
     } catch (error) {
       console.error(error);
       alert("Unable to connect to the server.");
@@ -77,18 +69,17 @@ function LoginForm() {
           <h5 className="card-title">Login</h5>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label">Username</label>
+              <label className="form-label">email</label>
               <input
-                type="text"
-                className={`form-control ${error.username ? "is-invalid" : ""}`}
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username"
+                type="email"
+                className={`form-control ${error.email ? "is-invalid" : ""}`}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter email"
               />
-              {error.username && (
-                <p className="text-danger">{error.username}</p>
+              {error.email && (
+                <p className="text-danger">{error.email}</p>
               )}
-  
             </div>
             <div className="mb-3">
               <label className="form-label">Password</label>
@@ -102,7 +93,6 @@ function LoginForm() {
               {error.password && (
                 <p className="text-danger">{error.password}</p>
               )}
-             
             </div>
             <button type="submit" className="btn btn-primary">
               {loading ? "Logging in..." : "Login"}
