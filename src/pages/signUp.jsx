@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   // Stores the teacher's name
+  const navigate = useNavigate();
   const [name, setName] = useState("");
 
   // Stores the teacher's email
@@ -13,7 +15,7 @@ function Signup() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const response = await fetch("http://localhost:5000/api/auth/signup", {
+    const response = await fetch("http://192.168.1.31:5000/api/auth/signup", {
       method: "POST",
 
       headers: {
@@ -28,7 +30,8 @@ function Signup() {
     });
 
     const data = await response.json();
-
+    alert("Account Successfully Created");
+    navigate("/")
     console.log(data);
   }
 
@@ -54,6 +57,7 @@ function Signup() {
                     placeholder="Enter your full name"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
+                    required
                   />
                 </div>
 
@@ -70,6 +74,7 @@ function Signup() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
+                    required
                   />
                 </div>
 
@@ -86,6 +91,7 @@ function Signup() {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
+                    required
                   />
                 </div>
 

@@ -94,5 +94,5 @@ app.post("/api/auth/login", async (req, res) => {
 
 // DEBUG API
 app.listen(5000, () => {
-  console.log("Server running on http://localhost:5000");
+  console.log("Server running on http://192.168.1.31:5000");
 });
