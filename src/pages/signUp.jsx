@@ -1,21 +1,33 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useSyncExternalStore } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Signup() {
   // Stores the teacher's name
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [middleName, setMi] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  //Teachers Department
+  const [region, setRegion] = useState("");
+  const [schoolID, setSchoolId] = useState("");
+  const [division, setDiv] = useState("");
+  const [schoolName, setSchoolName] = useState("");
 
   // Stores the teacher's email
   const [email, setEmail] = useState("");
 
   // Stores the teacher's password
   const [password, setPassword] = useState("");
+  const [conPassword, setConPassword] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
-
-    const response = await fetch("http://192.168.1.31:5000/api/auth/signup", {
+    const hosting = {
+      dev: "http://localhost:5000/api/auth/signup",
+      localhost: "http://192.168.1.31:5000/api/auth/signup",
+    };
+    const response = await fetch(hosting.localhost, {
       method: "POST",
 
       headers: {
@@ -28,82 +40,188 @@ function Signup() {
         password,
       }),
     });
-
-    const data = await response.json();
-    alert("Account Successfully Created");
-    navigate("/")
-    console.log(data);
+    if (conPassword !== password) {
+      alert("Password not matched");
+    } else {
+      const data = await response.json();
+      alert("Account Successfully Created");
+      navigate("/");
+      console.log(data);
+    }
   }
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-5">
-          <div className="card shadow">
-            <div className="card-body p-4">
-              <h2 className="text-center mb-4">Teacher Sign Up</h2>
+    <div className="signup-page">
+      <div className="signup-card">
+        {/* Header */}
+        <div className="text-center mb-4">
+          <h2>Sign up</h2>
+          <p className="text-muted mb-0">
+            Register to manage your classes and students.
+          </p>
+        </div>
 
-              <form onSubmit={handleSubmit}>
-                {/* Teacher name */}
-                <div className="mb-3">
-                  <label htmlFor="name" className="form-label">
-                    Full Name
-                  </label>
+        <form>
+          {/* =========================
+              PERSONAL INFORMATION
+          ========================== */}
+          <div className="signup-section">
+            <h5 className="section-title">Personal Information</h5>
 
-                  <input
-                    type="text"
-                    id="name"
-                    className="form-control"
-                    placeholder="Enter your full name"
-                    value={name}
-                    onChange={(event) => setName(event.target.value)}
-                    required
-                  />
-                </div>
+            <div className="row g-2">
+              {/* First Name */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">First Name</label>
 
-                {/* Teacher email */}
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="First Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
 
-                  <input
-                    type="email"
-                    id="email"
-                    className="form-control"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(event) => setEmail(event.target.value)}
-                    required
-                  />
-                </div>
+              {/* Middle Name */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">Middle Name</label>
 
-                {/* Teacher password */}
-                <div className="mb-4">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Middle Name"
+                  value={middleName}
+                  onChange={(e) => setMiddleName(e.target.value)}
+                  required
+                />
+              </div>
 
-                  <input
-                    type="password"
-                    id="password"
-                    className="form-control"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(event) => setPassword(event.target.value)}
-                    required
-                  />
-                </div>
+              {/* Last Name */}
+              <div className="col-12 col-md-4">
+                <label className="form-label">Last Name</label>
 
-                {/* Submit button */}
-                <div className="d-grid">
-                  <button type="submit" className="btn btn-primary">
-                    Sign Up
-                  </button>
-                </div>
-              </form>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </div>
             </div>
           </div>
+
+          {/* =========================
+              SCHOOL INFORMATION
+          ========================== */}
+          <div className="signup-section">
+            <h5 className="section-title">School Information</h5>
+
+            {/* Region */}
+            <div className="mb-3">
+              <label className="form-label">Region</label>
+
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter your region"
+                value={region}
+                onChange={(e) => setRegion(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* School Name */}
+            <div className="mb-3">
+              <label className="form-label">School Name</label>
+
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter your school name"
+                value={schoolName}
+                onChange={(e) => setSchoolName(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* School ID */}
+            <div>
+              <label className="form-label">School ID</label>
+
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Enter your school ID"
+                value={schoolID}
+                onChange={(e) => setSchoolID(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          {/* =========================
+              ACCOUNT INFORMATION
+          ========================== */}
+          <div className="signup-section">
+            <h5 className="section-title">Account Information</h5>
+
+            {/* Email */}
+            <div className="mb-3">
+              <label className="form-label">Email</label>
+
+              <input
+                type="email"
+                className="form-control"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Password */}
+            <div className="mb-3">
+              <label className="form-label">Password</label>
+
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Create a password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <label className="form-label">Confirm Password</label>
+
+              <input
+                type="password"
+                className="form-control"
+                placeholder="Confirm your password"
+                value={conPassword}
+                onChange={(e) => setConPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Submit */}
+          <button type="submit" className="btn btn-primary w-100 mt-2">
+            Create Account
+          </button>
+        </form>
+
+        {/* Login */}
+        <div className="text-center mt-4">
+          <span>Already have an account? </span>
+
+          <a href="/">Login</a>
         </div>
       </div>
     </div>

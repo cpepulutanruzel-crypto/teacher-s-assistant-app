@@ -1,0 +1,32 @@
+.signup-page {
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px 20px;
+}
+
+.signup-card {
+  width: 100%;
+  max-width: 650px;
+
+  padding: 30px;
+
+  background: white;
+
+  border: 1px solid #ddd;
+  border-radius: 12px;
+}
+
+.signup-section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #ddd;
+}

@@ -11,17 +11,17 @@ app.use(express.json());
 
 // SIGN UP API
 app.post("/api/auth/signup", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { given_name, email, password } = req.body;
 
   try {
     const passhash = await bcrypt.hash(password, 10);
     const result = await pool.query(
       `INSERT INTO public.tblteacheruser
-                (name, email, password_hash)
+                (given_name, email, password_hash)
              VALUES
                 ($1, $2, $3)
-             RETURNING id, name, email, created_at`,
-      [name, email, passhash],
+             RETURNING id, given_name, email, created_at`,
+      [given_name, email, passhash],
     );
 
     res.status(201).json({
@@ -45,7 +45,7 @@ app.post("/api/auth/login", async (req, res) => {
   try {
     // Find the teacher using their email
     const result = await pool.query(
-      `SELECT id, name, email, password_hash
+      `SELECT id, given_name, email, password_hash
              FROM public.tblteacheruser
              WHERE email = $1`,
       [email],
@@ -54,7 +54,7 @@ app.post("/api/auth/login", async (req, res) => {
     // Teacher does not exist
     if (result.rows.length === 0) {
       return res.status(401).json({
-        message: "Invalid email or password",
+        error: "Invalid email or password",
       });
     }
 
@@ -68,18 +68,18 @@ app.post("/api/auth/login", async (req, res) => {
     // Password is incorrect
     if (!passwordMatch) {
       return res.status(401).json({
-        message: "Invalid email or password",
+        error: "Invalid email or password",
       });
     }
 
     // Login successful
     const token = generateToken(teacher);
     res.status(200).json({
-      message: "Login successful",
+      success: "Login successful",
       token: token,
       teacher: {
         id: teacher.id,
-        name: teacher.name,
+        given_name: teacher.given_name,
         email: teacher.email,
       },
     });
@@ -87,12 +87,18 @@ app.post("/api/auth/login", async (req, res) => {
     console.error(error);
 
     res.status(500).json({
-      message: "Server error",
+      server: "Server error",
     });
   }
 });
 
 // DEBUG API
+
+const host = {
+  dev : "http://localhost:5000",
+  local : "http://192.168.1.31:5000"
+}
+
 app.listen(5000, () => {
-  console.log("Server running on http://192.168.1.31:5000");
+  console.log(`server is running on ${host.dev}`);
 });
