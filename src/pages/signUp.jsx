@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 function Signup() {
   // Stores the teacher's name
   const navigate = useNavigate();
-  const [name, setName] = useState("");
+  const [given_name, setName] = useState("");
   const [middleName, setMi] = useState("");
   const [lastName, setLastName] = useState("");
 
@@ -35,18 +35,32 @@ function Signup() {
       },
 
       body: JSON.stringify({
-        name,
+        given_name,
+        middleName,
+        lastName,
+        region,
+        schoolID,
+        schoolName,
+        division,
         email,
         password,
+
       }),
     });
     if (conPassword !== password) {
       alert("Password not matched");
-    } else {
-      const data = await response.json();
+    }
+    const data = await response.json();
+    if (data.success) {
       alert("Account Successfully Created");
       navigate("/");
       console.log(data);
+    }
+    else if(data.exist){
+      alert(data.error);
+    }
+    else{
+      alert(data);
     }
   }
 
@@ -61,7 +75,7 @@ function Signup() {
           </p>
         </div>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           {/* =========================
               PERSONAL INFORMATION
           ========================== */}
@@ -77,7 +91,7 @@ function Signup() {
                   type="text"
                   className="form-control"
                   placeholder="First Name"
-                  value={name}
+                  value={given_name}
                   onChange={(e) => setName(e.target.value)}
                   required
                 />
@@ -92,7 +106,7 @@ function Signup() {
                   className="form-control"
                   placeholder="Middle Name"
                   value={middleName}
-                  onChange={(e) => setMiddleName(e.target.value)}
+                  onChange={(e) => setMi(e.target.value)}
                   required
                 />
               </div>
@@ -156,7 +170,7 @@ function Signup() {
                 className="form-control"
                 placeholder="Enter your school ID"
                 value={schoolID}
-                onChange={(e) => setSchoolID(e.target.value)}
+                onChange={(e) => setSchoolId(e.target.value)}
                 required
               />
             </div>

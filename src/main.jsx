@@ -5,6 +5,8 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './index.css'
 import './css/LoginFrom.css'
 import './css/SignUp.css'
+import './css/ForgotPassword.css'
+import './css/ResetPassword.css' 
 import App from './App.jsx'
 import { AuthProvider } from "./context/AuthContext.jsx";
 

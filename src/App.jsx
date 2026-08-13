@@ -10,6 +10,8 @@ import LAYOUT from "./pages/Layout";
 import ADDSTUDENT from "./pages/addStudent";
 import SectionStudents from "./pages/sectionClass";
 import SIGNUP from "./pages/signUp"
+import FORGOTPASS from "./pages/forgotPass";
+import RESETPASS from "./pages/resetPassword";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
 
         <Route path="/" element={<LOGIN />} />
         <Route path= "/signup" element={<SIGNUP/>}/>
+        <Route path = "/forgot-password" element={<FORGOTPASS/>}/>
+        <Route path = "/reset-password/:token" element={<RESETPASS/>}/>
 
         <Route
           element={
